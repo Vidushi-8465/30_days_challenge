@@ -1,9 +1,8 @@
---- 
 # Day 1 – Iris Flower Classification
 
 This project builds a machine learning model that can identify the type of an Iris flower (Setosa, Versicolor, Virginica) using four measurements:
 **sepal length, sepal width, petal length, and petal width.**
----
+
 ## 📌 What This Project Does
 * Loads the Iris dataset
 * Trains 4 ML algorithms
