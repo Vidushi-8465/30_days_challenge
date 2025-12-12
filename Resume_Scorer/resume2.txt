@@ -1,0 +1,7 @@
+Name: Vedika Bhardwaj
+Experience: 6 years
+Skills: Java, SQL, Docker, Kubernetes, Python
+Projects:
+- Developed microservices using Java and deployed on Kubernetes. (2 years)
+- Built ETL pipelines with SQL and Python for data ingestion. (1 year)
+Education: B.E. Information Technology

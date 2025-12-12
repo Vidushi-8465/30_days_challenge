@@ -1,0 +1,12 @@
+{
+  "python": {"tier": 3, "aliases": ["python", "py"]},
+  "java": {"tier": 2, "aliases": ["java"]},
+  "c++": {"tier": 2, "aliases": ["c++", "cpp"]},
+  "tensorflow": {"tier": 3, "aliases": ["tensorflow", "tf"]},
+  "pytorch": {"tier": 3, "aliases": ["pytorch"]},
+  "sql": {"tier": 2, "aliases": ["sql", "structured query language"]},
+  "docker": {"tier": 2, "aliases": ["docker", "containers"]},
+  "kubernetes": {"tier": 3, "aliases": ["kubernetes", "k8s"]},
+  "nlp": {"tier": 3, "aliases": ["nlp", "natural language processing"]},
+  "spaCy": {"tier": 3, "aliases": ["spacy", "spaCy"]}
+}

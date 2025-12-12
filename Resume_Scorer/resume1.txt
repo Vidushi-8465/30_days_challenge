@@ -1,0 +1,7 @@
+Name: Vidushi bhardwaj
+Experience: 4 years
+Skills: Python, TensorFlow, NLP, spaCy, Docker
+Projects:
+- Built an NLP pipeline to extract entities and classify documents using spaCy and TensorFlow. (1 year)
+- Deployed model using Docker in a CI/CD pipeline. (6 months)
+Education: B.Tech Computer Science
