@@ -13,3 +13,41 @@ Similar customers fall into the same cluster.
 
 ## Folder Structure
 
+### Algorithms used : 
+* 1. :K-Means Clustering
+What is it?
+An unsupervised learning algorithm that groups data into K clusters.
+No labels. The algorithm finds patterns on its own.
+How it works (Step-by-step)
+Choose K (number of clusters)
+Randomly place K centroids
+Assign each point to the nearest centroid
+Recalculate centroids
+Repeat until centroids stop moving
+
+
+
+Why scaling is important?
+
+K-Means uses distance
+Different feature ranges = wrong clusters
+Hence we used: StandardScaler()
+
+* 2. Elbow Method
+
+Used to find optimal K
+
+Plot K vs WCSS
+
+The point where reduction slows → best K
+
+Looks like an “elbow”
+
+
+
+* 3. StandardScaler :
+Formula: 
+Z = (X - mean) / standard deviation
+
+This ensures that mean =0 ; Standard Deviation = 1
+
