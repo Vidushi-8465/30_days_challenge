@@ -11,14 +11,19 @@ In this project, customers are grouped using:
 
 Similar customers fall into the same cluster.
 
+### Dataset used: 
+We have used the most common mall data
+
 ### Algorithms used : 
 
 * 1. :K-Means Clustering
       * What is it?
 
-An unsupervised learning algorithm that groups data into K clusters.
-No labels. The algorithm finds patterns on its own.
-
+> An unsupervised learning algorithm that groups data into K clusters.
+> No labels. The algorithm finds patterns on its own.
+   
+      * Why do we use K-Means? 
+> K-Means is simple, fast, scalable, and works well when clusters are spherical and well-separated.
       * How it works (Step-by-step): 
 
 >Choose K (number of clusters)
