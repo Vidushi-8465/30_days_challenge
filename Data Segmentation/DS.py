@@ -66,12 +66,10 @@ def visualize_clusters(X, labels):
     plt.title("Customer Segmentation")
     plt.show()
 
-
+# The actual path
 if __name__ == "__main__":
     df = load_data(DATA_PATH)
-    
     X, X_scaled = preprocess(df)
-    
     find_optimal_k(X_scaled)
     kmeans, labels = train_kmeans(X_scaled, k=5)
     df['Cluster'] = labels
