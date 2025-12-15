@@ -74,11 +74,11 @@ Resume_Scorer/
 
 | Function                                  | Purpose            | Explanation                                                                                  |
 | ----------------------------------------- | ------------------ | -------------------------------------------------------------------------------------------- |
-| `parse_resume(text)`                      | Parse a resume     | Reads text, extracts skills, experience, and projects.                                       |
-| `extract_experience(text)`                | Extract experience | Uses regex to find years of experience mentioned in resume.                                  |
-| `extract_projects(text)`                  | Extract projects   | Extracts project descriptions and durations from the resume.                                 |
-| `score_resume(parsed_resume)`             | Score resume       | Calculates skill match, experience, project complexity, diversity, and final weighted score. |
-| `process_folder(folder_path, output_csv)` | Batch processing   | Scores all resumes in a folder and saves output CSV.                                         |
+| `parse_resume(text)`                      | Parse a resume     | Reads text, extracts skills, experience, and projects.                                   |
+| `extract_experience(text)`                | Extract experience | Uses regex to find years of experience mentioned in       resume.                                     |
+| `extract_projects(text)`                  | Extract projects   | Extracts project descriptions and durations from the resume.                                     |
+| `score_resume(parsed_resume)`             | Score resume       | Calculates skill match, experience, project complexity, diversity, and final weighted score.        |
+| `process_folder(folder_path, output_csv)` | Batch processing   | Scores all resumes in a folder and saves output CSV.                                        |
 
 ---
 
