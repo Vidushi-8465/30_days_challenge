@@ -51,3 +51,11 @@ Uses gradient descent
 Randomly disables neurons
 Prevents memorization
 Improves generalization
+
+
+
+
+
+
+* Output on 1st run: 
+![Alt text](output.png)
