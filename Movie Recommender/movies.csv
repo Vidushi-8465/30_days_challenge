@@ -1,0 +1,31 @@
+movie_id,title,genres,overview
+1,Inception,Action|Sci-Fi|Thriller,A skilled thief leads a team into dreams to steal secrets from the subconscious mind.
+2,Interstellar,Adventure|Drama|Sci-Fi,A group of explorers travel through a wormhole in space to ensure humanity's survival.
+3,The Dark Knight,Action|Crime|Drama,Batman faces the Joker who plunges Gotham into chaos.
+4,The Prestige,Drama|Mystery|Sci-Fi,Two rival magicians engage in a battle to create the ultimate illusion.
+5,The Matrix,Action|Sci-Fi,A hacker discovers the reality he lives in is a simulated world.
+6,Avatar,Action|Adventure|Sci-Fi,A marine explores an alien planet and becomes torn between duty and love.
+7,Titanic,Drama|Romance,A love story unfolds aboard the ill-fated Titanic ship.
+8,Avengers: Endgame,Action|Adventure|Sci-Fi,The Avengers assemble to undo the devastation caused by Thanos.
+9,Iron Man,Action|Adventure|Sci-Fi,A billionaire builds a high-tech suit to fight evil.
+10,Doctor Strange,Action|Fantasy|Sci-Fi,A surgeon learns mystic arts after a life-changing accident.
+11,Shutter Island,Thriller|Mystery,A detective investigates a mental asylum with disturbing secrets.
+12,Fight Club,Drama|Thriller,An underground fight club evolves into something far more dangerous.
+13,Forrest Gump,Drama|Romance,The life journey of a man with a low IQ but a big heart.
+14,Gladiator,Action|Drama,A betrayed Roman general seeks revenge.
+15,The Shawshank Redemption,Drama,Two imprisoned men bond over years finding redemption.
+16,Pulp Fiction,Crime|Drama,Interwoven stories of crime and redemption.
+17,The Godfather,Crime|Drama,The aging patriarch of a crime dynasty transfers control to his son.
+18,Joker,Crime|Drama|Thriller,A failed comedian descends into madness.
+19,Parasite,Thriller|Drama,A poor family schemes to infiltrate a wealthy household.
+20,The Wolf of Wall Street,Crime|Drama,A stockbroker rises and falls through corruption.
+21,Gravity,Sci-Fi|Thriller,Astronauts struggle to survive after a space disaster.
+22,Her,Drama|Romance|Sci-Fi,A man falls in love with an AI operating system.
+23,La La Land,Drama|Romance,Two artists struggle between love and ambition.
+24,Tenet,Action|Sci-Fi|Thriller,A secret agent manipulates time to prevent global catastrophe.
+25,Arrival,Drama|Sci-Fi,A linguist communicates with aliens to save humanity.
+26,The Social Network,Drama,The story behind the founding of Facebook.
+27,Black Panther,Action|Adventure|Sci-Fi,A king defends his technologically advanced nation.
+28,Dune,Adventure|Drama|Sci-Fi,A noble family fights for control of a desert planet.
+29,Blade Runner 2049,Sci-Fi|Drama,A replicant uncovers secrets that could change society.
+30,The Hunger Games,Action|Adventure|Sci-Fi,Teenagers fight for survival in a dystopian future.
