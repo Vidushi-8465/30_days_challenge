@@ -1,0 +1,188 @@
+import cv2                           # to access the webcam ,draw text on video frames and show live video window.
+import numpy as np                   # To handle the data in the form of arrays and numbers
+import tensorflow as tf              # Used to build, train, and fine-tune the CNN model
+from tensorflow import keras
+from tensorflow.keras import layers
+from tensorflow.keras.preprocessing.image import ImageDataGenerator #Loading images from folders and applying data augmentation (rotation, zoom, flip) 
+import matplotlib.pyplot as plt      # Used to plot accuracy & loss graphs and Help analyze model performance visually.
+
+
+#Configuration
+# This resizes all the images to 160 x 160
+IMG_SIZE = 160          # smaller = faster + less heat 
+# Number of images processed together in one step
+BATCH_SIZE = 32
+# Train classifier head
+INITIAL_EPOCHS = 5
+# Fine - tune base model
+FINE_TUNE_EPOCHS = 5
+# Number of classes for emotions 
+NUM_CLASSES = 7
+
+# To train and test
+TRAIN_DIR = "dataset/train"
+TEST_DIR = "dataset/test"
+
+# DATA GENERATORS
+
+# It converts converts pixel values from 0–255 → 0–1
+# It creates augmented images to avoid overfitting
+
+train_gen = ImageDataGenerator(
+    rescale=1./255,
+    # rotation handles head tilt
+    rotation_range=20,
+    # handles distance variation
+    zoom_range=0.2,
+    # handles left/right face orientation
+    horizontal_flip=True
+)
+
+#  Test generator
+test_gen = ImageDataGenerator(rescale=1./255)
+
+# this is to load the images 
+train_data = train_gen.flow_from_directory(
+   # reads folder names as labels
+    TRAIN_DIR,
+    # Resizes images
+    target_size=(IMG_SIZE, IMG_SIZE),
+    # Converts labels to one hot vectors
+    batch_size=BATCH_SIZE,
+    class_mode="categorical"
+)
+
+# Same logic for testing the data
+test_data = test_gen.flow_from_directory(
+    TEST_DIR,
+    target_size=(IMG_SIZE, IMG_SIZE),
+    batch_size=BATCH_SIZE,
+    class_mode="categorical"
+)
+# Stores label order and are needed later for webcam prediction mapping
+emotion_labels = list(train_data.class_indices.keys())
+
+# MODEL (TRANSFER LEARNING)
+# we are using MobileNetV2 as it is lightweight ,very fast , has high accuracy and is ideal for real time web applications
+base_model = keras.applications.MobileNetV2(
+    weights="imagenet",
+    include_top=False,
+    input_shape=(IMG_SIZE, IMG_SIZE, 3)
+)
+# This is to freeze pretrained layers to prevent destroying the learned features and trains only new classification layers  
+base_model.trainable = False  # freeze initially
+
+
+x = base_model.output
+x = layers.GlobalAveragePooling2D()(x)
+x = layers.BatchNormalization()(x)
+x = layers.Dense(256, activation="relu")(x)
+x = layers.Dropout(0.5)(x)
+output = layers.Dense(NUM_CLASSES, activation="softmax")(x)
+
+model = keras.Model(inputs=base_model.input, outputs=output)
+
+# =========================
+# COMPILE & TRAIN (STAGE 1)
+# =========================
+model.compile(
+    optimizer=keras.optimizers.Adam(learning_rate=1e-4),
+    loss="categorical_crossentropy",
+    metrics=["accuracy"]
+)
+
+print("\n🔹 Training classifier...")
+history1 = model.fit(
+    train_data,
+    validation_data=test_data,
+    epochs=INITIAL_EPOCHS
+)
+
+# =========================
+# FINE-TUNING (STAGE 2)
+# =========================
+print("\n🔹 Fine-tuning last layers...")
+
+base_model.trainable = True
+
+for layer in base_model.layers[:-30]:
+    layer.trainable = False
+
+model.compile(
+    optimizer=keras.optimizers.Adam(learning_rate=1e-5),
+    loss="categorical_crossentropy",
+    metrics=["accuracy"]
+)
+
+history2 = model.fit(
+    train_data,
+    validation_data=test_data,
+    epochs=FINE_TUNE_EPOCHS
+)
+
+# =========================
+# SAVE MODEL
+# =========================
+model.save("emotion_detector_model.keras")
+print("\n✅ Model saved!")
+
+# =========================
+# PLOT ACCURACY & LOSS
+# =========================
+acc = history1.history['accuracy'] + history2.history['accuracy']
+val_acc = history1.history['val_accuracy'] + history2.history['val_accuracy']
+loss = history1.history['loss'] + history2.history['loss']
+val_loss = history1.history['val_loss'] + history2.history['val_loss']
+
+plt.figure(figsize=(12,5))
+
+plt.subplot(1,2,1)
+plt.plot(acc, label="Train Accuracy")
+plt.plot(val_acc, label="Validation Accuracy")
+plt.legend()
+plt.title("Accuracy")
+
+plt.subplot(1,2,2)
+plt.plot(loss, label="Train Loss")
+plt.plot(val_loss, label="Validation Loss")
+plt.legend()
+plt.title("Loss")
+
+plt.show()
+
+# =========================
+# WEBCAM EMOTION DETECTION
+# =========================
+print("\n🎥 Starting webcam... Press Q to quit")
+
+cap = cv2.VideoCapture(0)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    img = cv2.resize(frame, (IMG_SIZE, IMG_SIZE))
+    img = img / 255.0
+    img = np.expand_dims(img, axis=0)
+
+    preds = model.predict(img, verbose=0)
+    emotion = emotion_labels[np.argmax(preds)]
+
+    cv2.putText(
+        frame,
+        emotion,
+        (30, 50),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        1.2,
+        (0, 255, 0),
+        3
+    )
+
+    cv2.imshow("Emotion Detector", frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
