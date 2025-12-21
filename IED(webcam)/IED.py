@@ -72,37 +72,52 @@ base_model = keras.applications.MobileNetV2(
 # This is to freeze pretrained layers to prevent destroying the learned features and trains only new classification layers  
 base_model.trainable = False  # freeze initially
 
-
+# output feature map from CNN
 x = base_model.output
+
+# Converts feature maps → single vector and reduces overfitting
 x = layers.GlobalAveragePooling2D()(x)
+
+# To stabilize learning and for faster convergence
 x = layers.BatchNormalization()(x)
+
+# this learns emotion specific features using Relu
+# we use relu to introduce non-linearity, enabling networks to learn complex patterns (beyond simple linear combinations), solve complex problems like image recognition, 
+# and train faster by mitigating the vanishing gradient problem (gradients don't shrink as much) and computationally efficiently (simple max(0, x) operation).
 x = layers.Dense(256, activation="relu")(x)
+
+# this randonly drops neurons to avoid overfitting
 x = layers.Dropout(0.5)(x)
+# "softmax" provides the probability of each emotion
 output = layers.Dense(NUM_CLASSES, activation="softmax")(x)
 
+# This is to call the final complete model
 model = keras.Model(inputs=base_model.input, outputs=output)
 
-# =========================
 # COMPILE & TRAIN (STAGE 1)
-# =========================
+
+
 model.compile(
+    # we use adam optimizer for adaptive learning
     optimizer=keras.optimizers.Adam(learning_rate=1e-4),
+    # "Categorial crossentropy" is a multi class classification
     loss="categorical_crossentropy",
     metrics=["accuracy"]
 )
 
 print("\n🔹 Training classifier...")
+
+# This trains only top layers and learns to classify emotions
 history1 = model.fit(
     train_data,
     validation_data=test_data,
     epochs=INITIAL_EPOCHS
 )
 
-# =========================
 # FINE-TUNING (STAGE 2)
-# =========================
-print("\n🔹 Fine-tuning last layers...")
 
+print("\n🔹 Fine-tuning last layers...")
+# this allows
 base_model.trainable = True
 
 for layer in base_model.layers[:-30]:
