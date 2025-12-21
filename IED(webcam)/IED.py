@@ -117,33 +117,31 @@ history1 = model.fit(
 # FINE-TUNING (STAGE 2)
 
 print("\n🔹 Fine-tuning last layers...")
-# this allows
+# this allows cnn to learn task specific features
 base_model.trainable = True
 
+# Fine tunes only last 30 layers to prevent overfitting
 for layer in base_model.layers[:-30]:
     layer.trainable = False
 
+# Lower learning rate as fine tuning must be slow and carefully done
 model.compile(
     optimizer=keras.optimizers.Adam(learning_rate=1e-5),
     loss="categorical_crossentropy",
     metrics=["accuracy"]
 )
-
+# This improves accuracy
 history2 = model.fit(
     train_data,
     validation_data=test_data,
     epochs=FINE_TUNE_EPOCHS
 )
 
-# =========================
 # SAVE MODEL
-# =========================
 model.save("emotion_detector_model.keras")
-print("\n✅ Model saved!")
+print("\n Model saved!")
 
-# =========================
 # PLOT ACCURACY & LOSS
-# =========================
 acc = history1.history['accuracy'] + history2.history['accuracy']
 val_acc = history1.history['val_accuracy'] + history2.history['val_accuracy']
 loss = history1.history['loss'] + history2.history['loss']
@@ -165,25 +163,33 @@ plt.title("Loss")
 
 plt.show()
 
-# =========================
 # WEBCAM EMOTION DETECTION
-# =========================
-print("\n🎥 Starting webcam... Press Q to quit")
+print("\n Starting webcam... Press Q to quit")
 
+# Opens default webcam
+# 0 --> for built in camera
 cap = cv2.VideoCapture(0)
 
+# this is for infinite loop that is for cont video frames
 while True:
+    # Reads a single frame and frame = image matrix and ret = success flag
     ret, frame = cap.read()
     if not ret:
         break
 
+# Resizes frame to match model input
     img = cv2.resize(frame, (IMG_SIZE, IMG_SIZE))
+    # this normalizes pixels which is same as training
     img = img / 255.0
+    # adds batch dimension
     img = np.expand_dims(img, axis=0)
 
+   # This predicts emotion probability
     preds = model.predict(img, verbose=0)
+    # Finds highest prob emotion and it converts index to label name
     emotion = emotion_labels[np.argmax(preds)]
 
+   # This displays predicted emotion on screen
     cv2.putText(
         frame,
         emotion,
@@ -194,10 +200,13 @@ while True:
         3
     )
 
+    # This shows live webcam window
     cv2.imshow("Emotion Detector", frame)
-
+   
+    # to exit we press Q
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+# Releases webcam and Closes OpenCV windows and prevents camera locks issues
 cap.release()
 cv2.destroyAllWindows()
