@@ -3,14 +3,14 @@
 * 3. Later, the last convolutional layers were unfrozen with a low learning rate to adapt features specifically for facial emotions.
 * 4. The model was then deployed for real-time webcam emotion detection using OpenCV.”
 
-# 🎭 Real-Time Facial Emotion Detection using Transfer Learning
+#  Real-Time Facial Emotion Detection using Transfer Learning
 
 A **real-time facial emotion recognition system** built using **Transfer Learning (MobileNetV2)** and **TensorFlow**, capable of detecting human emotions live through a webcam.
 The project focuses on **performance-aware design**, making it suitable for **CPU-based systems** like laptops.
 
 ---
 
-## 🚀 Project Overview
+##  Project Overview
 
 Emotion detection is a challenging computer vision task due to subtle facial expressions and subjective labeling.
 This project leverages a **pre-trained deep learning model (MobileNetV2)** to extract high-level facial features and classifies them into different emotional categories.
@@ -23,7 +23,7 @@ The system:
 
 ---
 
-## 🎯 Features
+##  Features
 
 * ✅ Transfer Learning with **MobileNetV2**
 * ✅ Two-stage training (Frozen base + Fine-tuning)
@@ -35,7 +35,7 @@ The system:
 
 ---
 
-## 🧠 Emotions Detected
+##  Emotions Detected
 
 The model classifies facial expressions into **7 categories**:
 
@@ -49,7 +49,7 @@ The model classifies facial expressions into **7 categories**:
 
 ---
 
-## 🏗️ Tech Stack
+##  Tech Stack
 
 * **Python**
 * **TensorFlow / Keras**
@@ -60,7 +60,7 @@ The model classifies facial expressions into **7 categories**:
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 emotion_detection/
@@ -91,20 +91,20 @@ emotion_detection/
 
 ---
 
-## 📦 Dataset
+##  Dataset
 
 * Facial emotion image dataset (e.g. **FER-2013** or similar)
 * Images organized by emotion labels
 * Balanced train/test split recommended
 
-> ⚠️ Emotion recognition datasets are noisy and subjective.
+>  Emotion recognition datasets are noisy and subjective.
 > Even state-of-the-art models typically achieve **60–70% accuracy**.
 
 ---
 
-## ⚙️ Installation & Setup
+##  Installation & Setup
 
-### 1️⃣ Clone the Repository
+### 1.  Clone the Repository
 
 ```bash
 git clone https://github.com/vidushi-8465/emotion-detection.git
@@ -113,7 +113,7 @@ cd emotion-detection
 
 ---
 
-### 2️⃣ Create Virtual Environment
+### 2️. Create Virtual Environment
 
 ```bash
 python -m venv venv
@@ -122,7 +122,7 @@ venv\Scripts\activate   # Windows
 
 ---
 
-### 3️⃣ Install Dependencies
+### 3️. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -139,7 +139,7 @@ matplotlib
 
 ---
 
-## ▶️ Running the Project
+## 4. Running the Project
 
 ```bash
 python IED.py
@@ -156,7 +156,7 @@ python IED.py
 
 ---
 
-## 📊 Training Results
+##  Training Results
 
 * Gradual improvement in training and validation accuracy
 * Decreasing loss curves indicate stable learning
@@ -166,7 +166,7 @@ python IED.py
 
 ---
 
-## 🧪 Why Accuracy is Limited
+##  Why Accuracy is Limited
 
 * Facial emotions are subtle and subjective
 * Overlapping expressions (sad vs neutral, fear vs surprise)
@@ -177,7 +177,7 @@ Despite this, the model generalizes well and performs reliably in real-time scen
 
 ---
 
-## 🧠 Key Concepts Used
+##  Key Concepts Used
 
 * **Transfer Learning**
 * **Fine-Tuning**
@@ -188,7 +188,7 @@ Despite this, the model generalizes well and performs reliably in real-time scen
 
 ---
 
-## 🔮 Future Improvements
+##  Future Improvements
 
 * 🔹 Face detection before emotion prediction
 * 🔹 GPU-based training for higher accuracy
@@ -198,7 +198,7 @@ Despite this, the model generalizes well and performs reliably in real-time scen
 
 ---
 
-## 🏁 Conclusion
+##  Conclusion
 
 This project demonstrates a **practical, real-world application of deep learning**, combining model optimization, transfer learning, and real-time inference.
 It highlights both **machine learning understanding** and **system-level thinking**, making it suitable for academic evaluation and technical interviews.
