@@ -25,13 +25,13 @@ The system:
 
 ##  Features
 
-* ✅ Transfer Learning with **MobileNetV2**
-* ✅ Two-stage training (Frozen base + Fine-tuning)
-* ✅ Real-time webcam emotion prediction
-* ✅ Data augmentation for better generalization
-* ✅ Performance-optimized for CPU environments
-* ✅ Accuracy & loss visualization
-* ✅ Clean, modular, single-file implementation
+* Transfer Learning with **MobileNetV2**
+* Two-stage training (Frozen base + Fine-tuning)
+* Real-time webcam emotion prediction
+* Data augmentation for better generalization
+* Performance-optimized for CPU environments
+* Accuracy & loss visualization
+* Clean, modular, single-file implementation
 
 ---
 
