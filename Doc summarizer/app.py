@@ -1,7 +1,11 @@
 import os
-from flask import Flask, render_template, request, Response, send_file
+#  flask is an app object, render template is to load the html file , request =to fetch the file , response = to stream the data , send file is to download the file 
+from flask import Flask, render_template, request, Response, send_file 
+# to extract texts from the pdfs
 from PyPDF2 import PdfReader
+# to import groq llm
 from groq import Groq
+#
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 
