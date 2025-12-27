@@ -46,17 +46,9 @@ The application works by:
 
 ##  Project Structure
 
-Absolutely 👍
-Here is a **clean, professional README.md** for your **Virtual Air Drum & Piano** project, written in the **same style, depth, and structure** as your example.
-This will fit perfectly into your **30 Days Challenge** repo and look **resume-ready**.
-
----
-
 ```md
-
 ---
 ##  Project Structure
-
 ```
 
 Virtual-air-drum/
@@ -80,7 +72,6 @@ Virtual-air-drum/
 └── README.md               # Project documentation
 
 ````
-
 ---
 ##  How It Works (Flow)
 
@@ -95,7 +86,6 @@ Virtual-air-drum/
    - Corresponding sound is played using Pygame
 7. Output is rendered in real time with minimal latency
 ---
-
 ##  Interaction Zones
 
 | Screen Area | Instrument |
@@ -106,7 +96,6 @@ Virtual-air-drum/
 | Bottom Right | Piano Key 2 |
 
 ---
-
 ##  Features
 
 • Real-time hand tracking  
@@ -117,7 +106,6 @@ Virtual-air-drum/
 • No internet or API required  
 
 ---
-
 ##  Limitations
 
 1. Requires a webcam
@@ -127,7 +115,6 @@ Virtual-air-drum/
 5. Desktop-only (not browser-based)
 
 ---
-
 ##  Future Improvements
 
 • Finger tap detection for realistic playing  
@@ -138,7 +125,6 @@ Virtual-air-drum/
 • Web-based version using MediaPipe JS  
 
 ---
-
 ##  Key Learnings from this Project
 
 • Real-time hand tracking with MediaPipe  
@@ -151,7 +137,6 @@ Virtual-air-drum/
 ---
 
 ##  How to Run
-
 ```bash
 pip install -r requirements.txt
 python vad.py
