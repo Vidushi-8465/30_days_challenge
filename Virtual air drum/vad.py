@@ -23,7 +23,7 @@ mp_draw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
 
-print("🎹 Virtual Air Drum & Piano Started")
+print("Virtual Air Drum & Piano Started")
 print("Press 'Q' to quit")
 
 # ---------------- MAIN LOOP ----------------
@@ -72,7 +72,7 @@ while True:
                         piano2.play()
                     last_play_time = current_time
 
-    cv2.imshow("🎹🥁 Virtual Air Drum & Piano", frame)
+    cv2.imshow(" Virtual Air Drum & Piano", frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
