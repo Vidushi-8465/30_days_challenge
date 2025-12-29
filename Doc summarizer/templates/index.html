@@ -1,74 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>PDF Summarizer (Groq)</title>
+    <meta charset="UTF-8">
+    <title>Document Summarizer</title>
+
     <style>
         body {
-            font-family: Arial;
-            background: #f4f4f4;
-            padding: 40px;
+            background-color: #ffe6f0;
+            font-family: "Segoe UI", sans-serif;
+            color: #4a0033;
         }
+
         .container {
-            max-width: 800px;
-            background: white;
+            width: 60%;
+            margin: auto;
+            margin-top: 60px;
+            background-color: #fff0f6;
             padding: 30px;
-            border-radius: 8px;
+            border-radius: 20px;
         }
-        textarea {
-            width: 100%;
-            height: 260px;
+
+        h1 {
+            color: #b30059;
+            text-align: center;
+        }
+
+        input[type="file"] {
             margin-top: 15px;
         }
-        button {
-            padding: 10px 20px;
+
+        select {
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
             margin-top: 10px;
+        }
+
+        button {
+            background-color: #ff85b3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-top: 20px;
             cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ff5fa2;
+        }
+
+        #output {
+            margin-top: 30px;
+            white-space: pre-wrap;
+        }
+
+        a {
+            color: #b30059;
+            font-weight: bold;
         }
     </style>
 </head>
+
 <body>
 <div class="container">
-    <h2>📄 PDF Document Summarizer (Groq Streaming)</h2>
+    <h1>💗 AI Document Summarizer</h1>
 
-    <input type="file" id="pdf">
+    <form id="form">
+        <input type="file" name="pdf" required>
+
+        <br><br>
+
+        <label>Summary Length:</label>
+        <select name="length">
+            <option value="short">Short</option>
+            <option value="medium" selected>Medium</option>
+            <option value="long">Detailed</option>
+        </select>
+
+        <br><br>
+
+        <button type="submit">✨ Summarize</button>
+    </form>
+
+    <div id="output"></div>
+
     <br>
-    <button onclick="uploadPDF()">Summarize</button>
-    <button onclick="downloadPDF()">Download Summary PDF</button>
-
-    <h3>🧠 Summary</h3>
-    <textarea id="output" readonly></textarea>
+    <a href="/download">📥 Download Summary as PDF</a>
 </div>
 
 <script>
-function uploadPDF() {
-    const fileInput = document.getElementById("pdf");
-    const output = document.getElementById("output");
-    output.value = "";
+const form = document.getElementById("form");
+const output = document.getElementById("output");
 
-    const formData = new FormData();
-    formData.append("pdf", fileInput.files[0]);
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    output.innerText = "";
 
-    fetch("/summarize", {
+    const response = await fetch("/summarize", {
         method: "POST",
-        body: formData
-    }).then(response => {
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-
-        function read() {
-            reader.read().then(({done, value}) => {
-                if (done) return;
-                output.value += decoder.decode(value);
-                read();
-            });
-        }
-        read();
+        body: new FormData(form)
     });
-}
 
-function downloadPDF() {
-    window.location.href = "/download";
-}
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        output.innerText += decoder.decode(value);
+    }
+});
 </script>
 </body>
 </html>
