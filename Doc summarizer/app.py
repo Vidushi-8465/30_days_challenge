@@ -1,11 +1,6 @@
 import os
-#  flask is an app object, render template is to load the html file , request =to fetch the file , response = to stream the data , send file is to download the file 
-from flask import Flask, render_template, request, Response, send_file 
-# to extract texts from the pdfs
 from PyPDF2 import PdfReader
-# to import groq llm
 from groq import Groq
-#
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 
@@ -16,9 +11,12 @@ SUMMARY_FOLDER = "summaries"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(SUMMARY_FOLDER, exist_ok=True)
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+api_key = os.getenv("GROQ_API_KEY")
+if not api_key:
+    raise RuntimeError("GROQ_API_KEY not found in environment variables")
 
-app = Flask(__name__)
+client = Groq(api_key=api_key)
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 latest_summary = ""
@@ -32,9 +30,16 @@ def extract_text_from_pdf(path):
     return text
 
 # ================= STREAM SUMMARY =================
-def stream_summary(text):
+def stream_summary(text, length):
     global latest_summary
     latest_summary = ""
+
+    if length == "short":
+        max_tokens = 400
+    elif length == "medium":
+        max_tokens = 800
+    else:
+        max_tokens = 1500
 
     prompt = f"""
 Summarize the following document clearly.
@@ -47,6 +52,7 @@ Use short paragraphs or bullet points.
         model="llama-3.1-8b-instant",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.3,
+        max_tokens=max_tokens,
         stream=True
     )
 
@@ -57,12 +63,12 @@ Use short paragraphs or bullet points.
 
 # ================= SAVE SUMMARY PDF =================
 def create_summary_pdf(text):
-    file_path = os.path.join(SUMMARY_FOLDER, "summary.pdf")
-    doc = SimpleDocTemplate(file_path)
+    path = os.path.join(SUMMARY_FOLDER, "summary.pdf")
+    doc = SimpleDocTemplate(path)
     styles = getSampleStyleSheet()
     content = [Paragraph(text.replace("\n", "<br/>"), styles["Normal"])]
     doc.build(content)
-    return file_path
+    return path
 
 # ================= ROUTES =================
 @app.route("/")
@@ -71,27 +77,24 @@ def index():
 
 @app.route("/summarize", methods=["POST"])
 def summarize():
-    print("Summarize route called")
-
     if "pdf" not in request.files:
-        return "No PDF uploaded", 400
+        return "No file uploaded", 400
 
-    file = request.files["pdf"]
-    print("Received file:", file.filename)
+    pdf = request.files["pdf"]
+    length = request.form.get("length", "medium")
 
-    path = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(path)
+    file_path = os.path.join(UPLOAD_FOLDER, pdf.filename)
+    pdf.save(file_path)
 
-    text = extract_text_from_pdf(path)
-    print("Extracted text length:", len(text))
+    text = extract_text_from_pdf(file_path)
 
-    return Response(stream_summary(text), mimetype="text/plain")
+    return Response(
+        stream_summary(text, length),
+        mimetype="text/plain"
+    )
 
 @app.route("/download")
 def download():
     pdf_path = create_summary_pdf(latest_summary)
     return send_file(pdf_path, as_attachment=True)
 
-# ================= RUN =================
-if __name__ == "__main__":
-    app.run(debug=True)
