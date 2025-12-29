@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.cluster import KMeans
 
 st.set_page_config(page_title="Color Detection Wheel", layout="centered")
-st.title("🎨 Color Detection Wheel using Dominant Colors")
+st.title("Color Detection Wheel using Dominant Colors")
 
 uploaded_file = st.file_uploader("Upload an Image", type=["jpg", "png", "jpeg"])
 k = st.slider("Number of Dominant Colors", 2, 10, 6)
