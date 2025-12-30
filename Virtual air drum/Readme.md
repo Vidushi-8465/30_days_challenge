@@ -115,16 +115,6 @@ Virtual-air-drum/
 5. Desktop-only (not browser-based)
 
 ---
-##  Future Improvements
-
-• Finger tap detection for realistic playing  
-• Full 7-key piano implementation  
-• Separate left-hand and right-hand instruments  
-• Volume control using hand distance  
-• Gesture-based mode switching  
-• Web-based version using MediaPipe JS  
-
----
 ##  Key Learnings from this Project
 
 • Real-time hand tracking with MediaPipe  
